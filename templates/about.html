@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About - Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <div class="brand-text">
+          <div class="brand-title">Notes</div>
+          <div class="brand-sub">About this project</div>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn btn-ghost" href="/">Back</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card glass">
+        <h1 class="h1">How it works</h1>
+        <p>
+          This website lets you create a note with an optional deadline. Notes are saved in a local
+          SQLite database on your machine, so they persist after refresh.
+        </p>
+        <div class="about-grid">
+          <div class="about-item">
+            <div class="about-k">UI</div>
+            <div class="about-v">HTML + CSS (gradient background + glassmorphism)</div>
+          </div>
+          <div class="about-item">
+            <div class="about-k">Interactivity</div>
+            <div class="about-v">Vanilla JavaScript + Fetch API (no reload CRUD)</div>
+          </div>
+          <div class="about-item">
+            <div class="about-k">Backend</div>
+            <div class="about-v">Python + Flask (JSON endpoints)</div>
+          </div>
+          <div class="about-item">
+            <div class="about-k">Storage</div>
+            <div class="about-v">SQLite (built-in, file: <code>notes.db</code>)</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="h2">Features</h2>
+        <ul class="list">
+          <li>Create notes with a timestamp</li>
+          <li>Optional deadline tracking (near / overdue styling)</li>
+          <li>Edit and delete notes instantly</li>
+          <li>Light/Dark theme toggle (saved in the browser)</li>
+          <li>Search/filter your notes</li>
+        </ul>
+      </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

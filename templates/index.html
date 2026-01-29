@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <div class="brand-text">
+          <div class="brand-title">Notes</div>
+          <div class="brand-sub">Fast. Simple. Stylish.</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="{{ url_for('about') }}" class="btn btn-ghost">About</a>
+        <button id="themeToggle" class="btn btn-solid" type="button" aria-pressed="false">
+          <span class="btn-icon" aria-hidden="true">◐</span>
+          <span class="btn-label">Theme</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card glass">
+        <div class="card-header">
+          <div>
+            <h1 class="h1">Write a note</h1>
+            <p class="muted">Save it with time + optional deadline. Edit or delete anytime.</p>
+          </div>
+          <div class="clock">
+            <div class="clock-label">Now</div>
+            <div id="liveClock" class="clock-time">--:--</div>
+          </div>
+        </div>
+
+        <form id="noteForm" class="note-form" autocomplete="off">
+          <div class="input-row">
+            <input
+              id="noteText"
+              class="input"
+              type="text"
+              placeholder="Enter your note…"
+              maxlength="280"
+              required
+            />
+            <button class="btn btn-primary" type="submit" title="Save note">
+              <span class="btn-icon" aria-hidden="true">✓</span>
+              <span>Save</span>
+            </button>
+          </div>
+
+          <div class="meta-row">
+            <div class="meta">
+              <label class="label" for="deadline">Deadline (optional)</label>
+              <input id="deadline" class="input input-small" type="datetime-local" />
+              <div class="hint">Tip: set a deadline and the UI will warn you when it’s close/overdue.</div>
+            </div>
+            <div class="meta">
+              <div class="label">Saved with</div>
+              <div class="chips">
+                <span class="chip">Date</span>
+                <span class="chip">Time</span>
+                <span class="chip">Deadline</span>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="divider"></div>
+
+        <section class="notes-section">
+          <div class="notes-header">
+            <h2 class="h2">Your notes</h2>
+            <div class="notes-tools">
+              <input id="search" class="input input-small" type="search" placeholder="Search…" />
+              <button id="clearSearch" class="btn btn-ghost" type="button">Clear</button>
+            </div>
+          </div>
+
+          <div id="emptyState" class="empty-state" hidden>
+            <div class="empty-title">No notes yet</div>
+            <div class="empty-sub">Add your first note above.</div>
+          </div>
+
+          <div id="notesList" class="notes-list">
+            {% for n in notes %}
+            <article class="note" data-id="{{ n.id }}" data-text="{{ n.text|e }}">
+              <div class="note-main">
+                <div class="note-text">{{ n.text }}</div>
+                <div class="note-meta">
+                  <span class="meta-pill" title="Created">{{ n.created_at }}</span>
+                  {% if n.deadline %}
+                  <span class="meta-pill meta-deadline" data-deadline="{{ n.deadline }}" title="Deadline">{{ n.deadline }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="note-actions">
+                <button class="btn btn-ghost btn-sm js-edit" type="button">Edit</button>
+                <button class="btn btn-danger btn-sm js-delete" type="button">Delete</button>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="modalBackdrop" class="modal-backdrop is-hidden"></div>
+
+    <div
+      id="editModal"
+      class="modal is-hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="editTitle"
+    >
+      <div class="modal-card glass">
+        <div class="modal-header">
+          <h3 id="editTitle" class="h3">Edit note</h3>
+          <button id="closeEdit" class="btn btn-ghost btn-sm" type="button" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm" class="edit-form">
+            <input id="editId" type="hidden" />
+            <label class="label" for="editText">Note</label>
+            <input id="editText" class="input" type="text" maxlength="280" required />
+
+            <label class="label" for="editDeadline">Deadline (optional)</label>
+            <input id="editDeadline" class="input input-small" type="datetime-local" />
+
+            <div class="modal-actions">
+              <button class="btn btn-ghost" id="cancelEdit" type="button">Cancel</button>
+              <button class="btn btn-primary" type="submit">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__INITIAL_NOTES__ = {{ notes|tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
