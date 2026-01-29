@@ -1,21 +1,26 @@
-# Notes App (Flask)
+# Flask Notes Application
 
-A simple, stylish Notes web app with a gradient + glass UI, light/dark theme toggle, deadlines, and instant create/edit/delete (no page reload).
+A simple and efficient Notes application built using Flask and SQLite.  
+Users can create, update, delete, and save notes with automatic date and time tracking.  
+The application also supports dark and light themes.
 
-## Run
+## Features
+- Create notes
+- Update notes
+- Delete notes
+- Save notes with date & time
+- Dark / Light theme toggle
+- Persistent storage using SQLite
 
+## Tech Stack
+- HTML, CSS, JavaScript
+- Python (Flask)
+- SQLite
+
+## Installation & Setup
+
+1. Clone the repository
 ```bash
-python -m venv .venv
-.\.venv\Scripts\activate
-pip install -r requirements.txt
-python app.py
-```
+git clone https://github.com/your-username/flask-notes-app.git
+cd flask-notes-app
 
-Open `http://127.0.0.1:5000/`.
-
-## Data
-
-Notes are stored in a local SQLite file: `notes.db` (created automatically).
-
-"# flask-notes-app" 
-"# flask-notes-app" 
